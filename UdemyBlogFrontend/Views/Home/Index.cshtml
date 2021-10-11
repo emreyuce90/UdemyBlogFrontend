@@ -1,0 +1,35 @@
+﻿@model List<BlogList>
+@using UdemyBlogFrontend.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+@if (@ViewBag.ActiveCategory!=null)
+{
+    <categoryinfo category-id="@ViewBag.ActiveCategory"></categoryinfo>
+}
+
+   
+  
+
+@foreach (var blog in Model)
+{
+    <div class="card mb-4">
+        @*<img class="card-img-top" src="http://localhost:64281/api/Images/GetBlogImageById/@blog.Id" alt="" />*@
+        <getblogimage id="@blog.Id" Enum="@BlogImageEnums.BlogHome"></getblogimage>
+
+        <div class="card-body">
+            <h2 class="card-title">@blog.Title</h2>
+            <p class="card-text">@blog.Description</p>
+            <a href="Home/BlogDetail/@blog.Id" class="btn btn-primary">Devamını Oku &rarr;</a>
+        </div>
+        <div class="card-footer text-muted">
+            @blog.ReleaseDate
+            <a href="#">Start Bootstrap</a>
+        </div>
+    </div>
+}
+
+
+
+
