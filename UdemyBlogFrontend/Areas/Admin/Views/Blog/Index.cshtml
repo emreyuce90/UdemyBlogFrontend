@@ -1,0 +1,32 @@
+﻿@model List<BlogList>
+<a class="btn btn-success mb-2" asp-action="AddBlog">Yeni Blog ekle</a>
+
+<table class="table table-bordered table-hover p-3 shadow mt-2 table-light">
+    <thead>
+        <tr>
+            <td>Blog Adı</td>
+            <td>Blog Başlığı</td>
+            <td>Kategorisi</td>
+            <td>İşlemler</td>
+
+    </thead>
+    <tbody>
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>@blog.Title</td>
+                <td>@blog.ShortDescription</td>
+                <td>BlogKategori</td>
+                <td>
+                    <a href="" class="btn btn-dark">
+                        Düzenle
+                    </a>
+                    <a href="" class="btn btn-danger">
+                        Sil
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
