@@ -26,18 +26,22 @@ namespace UdemyBlogFrontend.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> AddBlog()
+        public IActionResult AddBlog()
         {
-            return View();
+            return View(new BlogAddModel());
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddBlog(BlogList blog)
+        public async Task<IActionResult> AddBlog(BlogAddModel blog)
         {
-            await _blogApiService.AddBlogAsync(blog);
+            if (ModelState.IsValid)
+            {
+               await _blogApiService.AddBlogAsync(blog);
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index", null);
+            return View(blog);
         }
 
 

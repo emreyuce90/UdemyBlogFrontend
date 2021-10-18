@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UdemyBlogFrontend.ApiServices.Interfaces;
+using UdemyBlogFrontend.Models;
 
 namespace UdemyBlogFrontend.Controllers
 {
@@ -36,5 +37,7 @@ namespace UdemyBlogFrontend.Controllers
             
             return View(await _blogApiService.GetBlogDetailByIdAsync(id));
         }
+
+
     }
 }

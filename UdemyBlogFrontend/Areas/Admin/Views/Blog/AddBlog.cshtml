@@ -1,7 +1,7 @@
-﻿@model BlogList
+﻿@model BlogAddModel
 
 
-    <form asp-action="AddBlog" method="post" class="form-control mx-auto w-50 p-4 shadow">
+    <form asp-action="AddBlog" method="post" enctype="multipart/form-data" class="form-control mx-auto w-50 p-4 shadow">
         <div class="form-group">
             <label class="form-label">Başlık</label>
             <input asp-for="Title" class="form-control" />
@@ -12,14 +12,14 @@
         </div>
         <div class="form-group">
             <label class="form-label">İçerik</label>
-            <input asp-for="Description" class="form-control" />
-        </div>
+            <textarea asp-for="Description" class="form-control"  ></textarea>
+        </div>  
         <div class="form-group">
-            <label class="form-label">Resim</label>
-            <input asp-for="Title" class="form-control" type="file" />
+            <label class="form-label">Resim Seçiniz</label>
+            <input asp-for="File" class="form-control-file" type="file" />
         </div>
 
         <div class="mt-2">
-            <button class="btn btn-success">Bloğu Yayınla</button>
+            <button class="btn btn-success" type="submit">Bloğu Yayınla</button>
         </div>
     </form>
