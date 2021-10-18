@@ -8,18 +8,19 @@
     <meta name="author" content="" />
     <title>Admin Sayfası</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="~/template/startbootstrap-simple-sidebar-gh-pages/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="~/template/startbootstrap-simple-sidebar-gh-pages/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="~/template/startbootstrap-simple-sidebar-gh-pages/css/styles.css" rel="stylesheet" />
+
+    @RenderSection("css", false);
 </head>
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-white" id="sidebar-wrapper">
-          
+
             <div class="list-group list-group-flush">
-                <a  asp-action="Index" asp-controller="Blog" asp-area="Admin" class="list-group-item list-group-item-action list-group-item-light p-3" 
-                   >Bloglar</a>
+                <a asp-action="Index" asp-controller="Blog" asp-area="Admin" class="list-group-item list-group-item-action list-group-item-light p-3">Bloglar</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
@@ -30,16 +31,15 @@
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
-            
             <!-- Page content-->
             <div class="container-fluid">
-              @RenderBody()
+                @RenderBody()
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JS-->
-    
-    <!-- Core theme JS-->
     <script src="~/template/startbootstrap-simple-sidebar-gh-pages/js/scripts.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+
+    @RenderSection("JavaScript", false);
 </body>
 </html>

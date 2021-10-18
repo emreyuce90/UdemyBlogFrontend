@@ -20,12 +20,12 @@
 
         <div class="card-body">
             <h2 class="card-title">@blog.Title</h2>
-            <p class="card-text">@blog.Description</p>
+            <p class="card-text">@Html.Raw(blog.Description)</p>
             <a href="Home/BlogDetail/@blog.Id" class="btn btn-primary">Devamını Oku &rarr;</a>
         </div>
         <div class="card-footer text-muted">
             @blog.ReleaseDate
-            <a href="#">Start Bootstrap</a>
+            
         </div>
     </div>
 }
