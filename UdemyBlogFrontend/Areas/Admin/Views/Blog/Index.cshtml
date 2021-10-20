@@ -21,7 +21,7 @@
                     <a asp-action="UpdateBlog" asp-route-id="@blog.Id" class="btn btn-dark">
                         Düzenle
                     </a>
-                    <a href="" class="btn btn-danger">
+                    <a asp-action="DeleteBlog" asp-route-id="@blog.Id" id="btnDelete" class="btn btn-danger">
                         Sil
                     </a>
                 </td>
@@ -30,3 +30,18 @@
 
     </tbody>
 </table>
+
+@* @section JavaScript{
+<script>
+    $(document).ready(function () {
+        $("#btnDelete").click(function () {
+           var onay = confirm('Bu kaydı silmek istediğinize emin misiniz?');
+            if (onay == true) {
+                alert('You have deleted this record succesfully!');
+            } else {
+                
+            }
+        });
+    });
+</script> }*@
+

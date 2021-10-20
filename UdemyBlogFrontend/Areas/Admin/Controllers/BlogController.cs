@@ -63,6 +63,13 @@ namespace UdemyBlogFrontend.Areas.Admin.Controllers
             return View(model);
         }
 
+        
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            await _blogApiService.DeleteBlogAsync(id);
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

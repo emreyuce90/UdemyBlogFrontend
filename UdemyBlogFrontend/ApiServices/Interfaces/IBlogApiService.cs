@@ -16,5 +16,7 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task<BlogUpdateModel> GetBlogByBlogIdAsync(int id);
 
         Task UpdateBlogAsync(int id,BlogUpdateModel model);
+
+        Task DeleteBlogAsync(int id);
     }
 }

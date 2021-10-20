@@ -78,6 +78,12 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
 
         }
 
+        public async Task DeleteBlogAsync(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization=new AuthenticationHeaderValue("Bearer",_httpContextAccessor.HttpContext.Session.GetString("token"));
+             await _httpClient.DeleteAsync("http://localhost:64281/api/blogs/"+id);
+        
+        }
 
         public async Task<List<BlogList>> GetAllAsync()
         {
