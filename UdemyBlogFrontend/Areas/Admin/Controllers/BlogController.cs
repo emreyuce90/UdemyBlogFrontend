@@ -37,11 +37,30 @@ namespace UdemyBlogFrontend.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-               await _blogApiService.AddBlogAsync(blog);
+                await _blogApiService.AddBlogAsync(blog);
                 return RedirectToAction("Index");
             }
 
             return View(blog);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateBlog(int id)
+        {
+
+            return View(await _blogApiService.GetBlogByBlogIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBlog(int id, BlogUpdateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                await _blogApiService.UpdateBlogAsync(model.Id, model);
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
 

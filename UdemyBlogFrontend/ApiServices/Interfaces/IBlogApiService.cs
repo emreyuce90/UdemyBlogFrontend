@@ -12,5 +12,9 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task<List<BlogList>> GetBlogsByCategoryId(int id);
         Task<BlogList> GetBlogDetailByIdAsync(int Id);
         Task AddBlogAsync(BlogAddModel model);
+
+        Task<BlogUpdateModel> GetBlogByBlogIdAsync(int id);
+
+        Task UpdateBlogAsync(int id,BlogUpdateModel model);
     }
 }

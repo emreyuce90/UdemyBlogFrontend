@@ -23,7 +23,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
-            
+
 
         }
 
@@ -44,22 +44,22 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
                 var stream = new MemoryStream();
                 await model.File.CopyToAsync(stream);
                 var bytes = stream.ToArray();
-               
-                
-        
+
+
+
                 //okuduğumuz bu bytlerı isteğimizin headers kısmında geçeceğiz.
                 ByteArrayContent byteContent = new ByteArrayContent(bytes);
                 //headers n content type ını gidecek olan görselin content type ını verdik
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue(model.File.ContentType);
 
                 //form dataya bytearray olarak okuduğumuz datayı,Image ,Image dosya adını verdik
-                formData.Add(byteContent,nameof(BlogAddModel.File),model.File.FileName);
+                formData.Add(byteContent, nameof(BlogAddModel.File), model.File.FileName);
             }
 
 
 
             //appuser id yi session kısmından çekmemiz gerekir.Daha önce setstringini activeUser olarak geçmiştik
-            var user =_httpContextAccessor.HttpContext.Session.GetObject<ActiveUser>("activeUser");
+            var user = _httpContextAccessor.HttpContext.Session.GetObject<ActiveUser>("activeUser");
             model.AppUserId = user.Id;
 
 
@@ -73,21 +73,10 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             //Tokenımızı da istek ile birlikte gönderelim
             //Daha önce token ımızı token olarak 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
-           await _httpClient.PostAsync("http://localhost:64281/api/blogs/",formData);
+            await _httpClient.PostAsync("http://localhost:64281/api/blogs/", formData);
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
         public async Task<List<BlogList>> GetAllAsync()
@@ -101,7 +90,15 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             return null;
         }
 
-
+        public async Task<BlogUpdateModel> GetBlogByBlogIdAsync(int id)
+        {
+            var responseMessage = await _httpClient.GetAsync("http://localhost:64281/api/blogs/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<BlogUpdateModel>(await responseMessage.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
 
         public async Task<BlogList> GetBlogDetailByIdAsync(int Id)
         {
@@ -126,6 +123,42 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             }
 
             return null;
+        }
+
+        public async Task UpdateBlogAsync(int id, BlogUpdateModel model)
+        {
+            MultipartFormDataContent formData = new MultipartFormDataContent();
+            if (model.File != null)
+            {
+
+                var stream = new MemoryStream();
+                await model.File.CopyToAsync(stream);
+                var bytes = stream.ToArray();
+
+
+
+
+                ByteArrayContent byteContent = new ByteArrayContent(bytes);
+
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue(model.File.ContentType);
+
+
+                formData.Add(byteContent, nameof(BlogUpdateModel.File), model.File.FileName);
+            }
+            var user = _httpContextAccessor.HttpContext.Session.GetObject<ActiveUser>("activeUser");
+            model.AppUserId = user.Id;
+
+            formData.Add(new StringContent(model.Id.ToString()), nameof(BlogUpdateModel.Id));
+            formData.Add(new StringContent(model.AppUserId.ToString()), nameof(BlogUpdateModel.AppUserId));
+            //artık geri kalan modellerimizi stringContent olarak geçebiliriz
+            formData.Add(new StringContent(model.Description), nameof(BlogUpdateModel.Description));
+            formData.Add(new StringContent(model.ShortDescription), nameof(BlogUpdateModel.ShortDescription));
+            formData.Add(new StringContent(model.Title), nameof(BlogUpdateModel.Title));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
+
+           await _httpClient.PutAsync("http://localhost:64281/api/blogs/" + id, formData);
+            
+
         }
     }
 }
