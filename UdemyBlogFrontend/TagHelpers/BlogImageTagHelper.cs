@@ -15,6 +15,7 @@ namespace UdemyBlogFrontend.TagHelpers
         public BlogImageTagHelper(IImageApiService imageApiService)
         {
             _imageApiService = imageApiService;
+                        
         }
         public BlogImageEnums Enum { get; set; }
         public int Id { get; set; }

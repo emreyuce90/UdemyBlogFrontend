@@ -7,7 +7,8 @@ namespace UdemyBlogFrontend.Enums
 {
     public enum BlogImageEnums
     {
-        BlogHome=1,
-        BlogDetail=2
+        BlogHome = 1,
+
+        BlogDetail = 2
     }
 }
