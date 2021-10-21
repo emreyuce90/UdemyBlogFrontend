@@ -1,6 +1,6 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -14,18 +14,21 @@
 
     @RenderSection("css", false)
 </head>
+
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-white" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-                <a asp-action="Index" asp-controller="Blog" asp-area="Admin" class="list-group-item list-group-item-action list-group-item-light p-3">Bloglar</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="Index" asp-controller="Category">Kategoriler</a>
+                <a asp-action="Index" asp-controller="Blog" asp-area="Admin"
+                    class="list-group-item list-group-item-action list-group-item-light p-3">Bloglar</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="Index"
+                    asp-controller="Category">Kategoriler</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-            
+
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
             </div>
         </div>
@@ -43,4 +46,5 @@
 
     @RenderSection("JavaScript", false)
 </body>
+
 </html>

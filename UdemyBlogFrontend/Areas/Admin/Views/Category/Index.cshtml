@@ -1,7 +1,7 @@
 @model List<CategoryList>
 
     <div >
-        <button class="btn btn-success">
+        <button class="btn btn-success" asp-action="Create">
             Yeni Kategori Ekle
         </button>
     </div>
@@ -22,8 +22,8 @@
                 <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>
-                    <a href="" class="btn btn-warning">Düzenle</a>
-                    <a href="" class="btn btn-danger">Sil?</a>
+                    <a class="btn btn-warning" asp-action="Update"  asp-route-id="@item.Id">Düzenle</a>
+                    <a href="" class="btn btn-danger" >Sil?</a>
                 </td>
             </tr>
             }

@@ -1,0 +1,19 @@
+@model CategoryList
+
+<form action="Update" method="post">
+    <div class="form-group">
+      <label for="">Kategori Id:</label>
+      <input class="form-control" asp-for="@Model.Id">
+      
+    </div>
+    <div class="form-group">
+        <label for="">Kategori Adı:</label>
+        <input class="form-control" asp-for="@Model.Name">
+        
+      </div>
+      <div>
+          <button type="submit" class="btn btn-info">
+              Güncelle
+          </button>
+      </div>
+</form>

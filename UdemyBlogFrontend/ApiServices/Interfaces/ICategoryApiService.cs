@@ -15,5 +15,11 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task<Category> GetCategoryNameByIdAsync(int id);
 
         Task<List<CategoryList>> GetAllCategoriesAsync();
+
+        Task<CategoryList> GetCategoryByCategoryIdAsync(int id);
+
+        Task UpdateCategoryAsync(CategoryList category);
+
+        Task CreateCategoryAsync(CategoryList category);
     }
 }
