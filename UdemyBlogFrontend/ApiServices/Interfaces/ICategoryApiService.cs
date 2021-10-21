@@ -13,5 +13,7 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task<List<CategoryListViewModel>> GetCategoriesWithBlogCount();
 
         Task<Category> GetCategoryNameByIdAsync(int id);
+
+        Task<List<CategoryList>> GetAllCategoriesAsync();
     }
 }
