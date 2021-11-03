@@ -15,18 +15,25 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
     {
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public CategoryApiManager(HttpClient httpClient,IHttpContextAccessor httpContextAccessor)
+        public CategoryApiManager(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
-            _httpContextAccessor=httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task CreateCategoryAsync(CategoryList category)
         {
             MultipartFormDataContent formDataContent = new MultipartFormDataContent();
-            formDataContent.Add(new StringContent(category.Name),nameof(CategoryList.Name));
-            _httpClient.DefaultRequestHeaders.Authorization=new AuthenticationHeaderValue("Bearer",_httpContextAccessor.HttpContext.Session.GetString("token"));
-           await _httpClient.PostAsync("http://localhost:64281/api/categories",formDataContent);
+            formDataContent.Add(new StringContent(category.Name), nameof(CategoryList.Name));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
+            await _httpClient.PostAsync("http://localhost:64281/api/categories", formDataContent);
+        }
+
+        public async Task DeleteCategoryAsync(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
+            await _httpClient.DeleteAsync("http://localhost:64281/api/categories/" + id);
+
         }
 
         public async Task<List<CategoryListViewModel>> GetAllAsync()
@@ -86,7 +93,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent(category.Id.ToString()), nameof(CategoryList.Id));
             formData.Add(new StringContent(category.Name), nameof(CategoryList.Name));
-            _httpClient.DefaultRequestHeaders.Authorization=new AuthenticationHeaderValue("Bearer",_httpContextAccessor.HttpContext.Session.GetString("token"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
             await _httpClient.PutAsync("http://localhost:64281/api/categories/" + category.Id, formData);
         }
     }

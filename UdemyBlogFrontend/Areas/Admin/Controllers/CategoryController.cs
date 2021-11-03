@@ -58,7 +58,12 @@ namespace UdemyBlogFrontend.Areas.Admin.Controllers
             }
             return View(category);
         }
-
+        
+        
+        public async Task<IActionResult> Delete(int id){
+            await _categoryService.DeleteCategoryAsync(id);
+            return RedirectToAction("Index");
+        }
 
 
     }

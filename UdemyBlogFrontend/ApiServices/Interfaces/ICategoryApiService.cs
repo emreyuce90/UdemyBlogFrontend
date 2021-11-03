@@ -21,5 +21,7 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task UpdateCategoryAsync(CategoryList category);
 
         Task CreateCategoryAsync(CategoryList category);
+
+        Task DeleteCategoryAsync(int id);
     }
 }
