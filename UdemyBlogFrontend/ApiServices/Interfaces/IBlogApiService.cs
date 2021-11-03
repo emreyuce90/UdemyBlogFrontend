@@ -18,5 +18,9 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task UpdateBlogAsync(int id,BlogUpdateModel model);
 
         Task DeleteBlogAsync(int id);
+
+        Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId,int? parentId);
+
+        
     }
 }

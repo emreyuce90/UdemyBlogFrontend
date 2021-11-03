@@ -131,6 +131,15 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             return null;
         }
 
+        public async Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId,int? parentId)
+        {
+            var responseMessage= await _httpClient.GetAsync($"http://localhost:64281/api/blogs/{BlogId}/GetComments/?parentId={parentId}");
+            if(responseMessage.IsSuccessStatusCode){
+               return JsonConvert.DeserializeObject<List<CommentListViewModel>>(await responseMessage.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
+
         public async Task UpdateBlogAsync(int id, BlogUpdateModel model)
         {
             MultipartFormDataContent formData = new MultipartFormDataContent();
