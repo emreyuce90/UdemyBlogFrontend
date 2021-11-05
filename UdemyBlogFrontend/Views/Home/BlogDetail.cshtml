@@ -57,8 +57,11 @@
                 <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                     <div class="media-body">
+                       
                         <h5 class="mt-0">@c.AuthorName</h5>
                         @c.Description
+                       
+                        <button class="btn btn-danger">Cevapla</button>
                         @if (c.SubComments.Count > 0)
                         {
                             foreach (var sc in c.SubComments)
@@ -67,13 +70,14 @@
                                     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                                     <div class="media-body">
                                         <h5 class="mt-0">@sc.AuthorName</h5>
+                                        
                                         @sc.Description
+                                      
                                     </div>
+                                    <button class="btn btn-danger mr-0">Cevapla</button>
                                 </div>
                             }
                         }
-
-
 
                     </div>
                 </div>

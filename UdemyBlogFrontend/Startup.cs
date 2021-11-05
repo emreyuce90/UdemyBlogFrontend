@@ -35,7 +35,8 @@ namespace UdemyBlogFrontend
             services.AddHttpClient<ISignInApiService, SignInApiManager>();
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+                
             services.AddRazorPages();
         }
 

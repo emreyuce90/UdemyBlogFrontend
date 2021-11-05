@@ -10,24 +10,24 @@ namespace UdemyBlogFrontend.Controllers
 {
     public class HomeController : Controller
     {
-        
+
         private readonly IBlogApiService _blogApiService;
         private readonly ICategoryApiService _categoryApiService;
         public HomeController(IBlogApiService blogApiService, ICategoryApiService categoryApiService)
         {
             _blogApiService = blogApiService;
             _categoryApiService = categoryApiService;
-           
+
         }
         public async Task<IActionResult> Index(int? categoryId)
         {
-            
+
             if (categoryId.HasValue)
             {
-              
+
                 ViewBag.ActiveCategory = categoryId;
                 return View(await _blogApiService.GetBlogsByCategoryId((int)categoryId));
-               
+
             }
             return View(await _blogApiService.GetAllAsync());
         }
@@ -35,7 +35,7 @@ namespace UdemyBlogFrontend.Controllers
         public async Task<IActionResult> BlogDetail(int id)
         {
             //Yorumları çek
-            ViewBag.Comments=await _blogApiService.GetCommentsAsync(id,null);
+            ViewBag.Comments = await _blogApiService.GetCommentsAsync(id, null);
             return View(await _blogApiService.GetBlogDetailByIdAsync(id));
         }
 
