@@ -39,6 +39,17 @@ namespace UdemyBlogFrontend.Controllers
             return View(await _blogApiService.GetBlogDetailByIdAsync(id));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddComments(CommentAddViewModel model)
+        {
+            if (ModelState.IsValid){
+                model.ReleseDate=DateTime.Now;
+                await _blogApiService.AddCommentAsync(model);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
 
     }
 }

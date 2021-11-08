@@ -56,7 +56,7 @@ var comments = (List<CommentListViewModel>)ViewBag.Comments;
                 <div class="card my-4">
                     <h5 class="card-header">Yorum Yaz: </h5>
                     <div class="card-body">
-                        <form method="post">
+                        <form method="post" asp-controller="Home" asp-action="AddComments">
                             <div class="form-group">
                                 <label>Adınız :</label>
                                 <input type="text" name="AuthorName" class="form-control" required>
@@ -81,19 +81,20 @@ var comments = (List<CommentListViewModel>)ViewBag.Comments;
                 @{
                 GetComments(comments);
                 }
-                @section JavaScript{
-                <script>
-                    function showCommentForm(id, blogId) {
-                        let html =
-                            ` <div class="card my-4"> <h5 class="card-header">Yorum Yaz: </h5> <div class="card-body"> <form method="post"> <div class="form-group"> <label>Adınız :</label> <input type="text" name="AuthorName" class="form-control" required> </div><div class="form-group"> <label>E-Posta Adresiniz :</label> <input type="email" name="AuthorEmail" class="form-control" required> </div><div class="form-group"> <label>Yorumunuz :</label> <textarea required name="Description" class="form-control" rows="3"></textarea> </div><input type="hidden" name="BlogId" value="${blogId}}"> <input type="hidden" name="ParentCommentId" value="${id}"><div class="form-group mt-4"> <button type="button" class="btn btn-warning" onClick="hideCommentForm(${id})">Vazgeç</button> <div class="form-group mt-4"> <button type="submit" class="btn btn-primary">Yorumu Gönder</button> </div></form> </div></div>`;
-                        $("#commentBox" + id).html(html);
-                    };
 
-                    function hideCommentForm(id) {
-                        $("#commentBox" + id).html("");
-                    }
-                </script>
-                }
             </div>
 
         </div>
+        @section JavaScript{
+            <script>
+                function showCommentForm(id, blogId) {
+                    let html =
+                        ` <div class="card my-4"> <h5 class="card-header">Yorum Yaz: </h5> <div class="card-body"> <form method="post"> <div class="form-group"> <label>Adınız :</label> <input type="text" name="AuthorName" class="form-control" required> </div><div class="form-group"> <label>E-Posta Adresiniz :</label> <input type="email" name="AuthorEmail" class="form-control" required> </div><div class="form-group"> <label>Yorumunuz :</label> <textarea required name="Description" class="form-control" rows="3"></textarea> </div><input type="hidden" name="BlogId" value="${blogId}}"> <input type="hidden" name="ParentCommentId" value="${id}"><div class="form-group mt-4"> <button type="button" class="btn btn-warning" onClick="hideCommentForm(${id})">Vazgeç</button> <div class="form-group mt-4"> <button type="submit" class="btn btn-primary">Yorumu Gönder</button> </div></form> </div></div>`;
+                    $("#commentBox" + id).html(html);
+                };
+
+                function hideCommentForm(id) {
+                    $("#commentBox" + id).html("");
+                }
+            </script>
+            }

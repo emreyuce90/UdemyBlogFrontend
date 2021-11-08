@@ -21,6 +21,8 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
 
         Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId,int? parentId);
 
+        Task AddCommentAsync(CommentAddViewModel model);
+
         
     }
 }

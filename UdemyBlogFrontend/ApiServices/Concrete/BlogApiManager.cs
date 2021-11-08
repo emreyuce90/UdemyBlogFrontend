@@ -78,11 +78,22 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
 
         }
 
+        public async Task AddCommentAsync(CommentAddViewModel model)
+        {
+            MultipartFormDataContent formData = new MultipartFormDataContent();
+            formData.Add(new StringContent(model.BlogId.ToString()), nameof(CommentAddViewModel.BlogId));
+            formData.Add(new StringContent(model.AuthorEmail), nameof(CommentAddViewModel.AuthorEmail));
+            formData.Add(new StringContent(model.AuthorName), nameof(CommentAddViewModel.AuthorName));
+            formData.Add(new StringContent(model.Description), nameof(CommentAddViewModel.Description));
+
+            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddComment", formData);
+        }
+
         public async Task DeleteBlogAsync(int id)
         {
-            _httpClient.DefaultRequestHeaders.Authorization=new AuthenticationHeaderValue("Bearer",_httpContextAccessor.HttpContext.Session.GetString("token"));
-             await _httpClient.DeleteAsync("http://localhost:64281/api/blogs/"+id);
-        
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
+            await _httpClient.DeleteAsync("http://localhost:64281/api/blogs/" + id);
+
         }
 
         public async Task<List<BlogList>> GetAllAsync()
@@ -131,11 +142,12 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             return null;
         }
 
-        public async Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId,int? parentId)
+        public async Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId, int? parentId)
         {
-            var responseMessage= await _httpClient.GetAsync($"http://localhost:64281/api/blogs/{BlogId}/GetComments/?parentId={parentId}");
-            if(responseMessage.IsSuccessStatusCode){
-               return JsonConvert.DeserializeObject<List<CommentListViewModel>>(await responseMessage.Content.ReadAsStringAsync());
+            var responseMessage = await _httpClient.GetAsync($"http://localhost:64281/api/blogs/{BlogId}/GetComments/?parentId={parentId}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<CommentListViewModel>>(await responseMessage.Content.ReadAsStringAsync());
             }
             return null;
         }
@@ -171,8 +183,8 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             formData.Add(new StringContent(model.Title), nameof(BlogUpdateModel.Title));
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
 
-           await _httpClient.PutAsync("http://localhost:64281/api/blogs/" + id, formData);
-            
+            await _httpClient.PutAsync("http://localhost:64281/api/blogs/" + id, formData);
+
 
         }
     }
