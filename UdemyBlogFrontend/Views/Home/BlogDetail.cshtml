@@ -1,90 +1,99 @@
 ﻿@model BlogList
 @{
-    ViewData["Title"] = "BlogDetail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var comments = (List<CommentListViewModel>)ViewBag.Comments;
-}
+ViewData["Title"] = "BlogDetail";
+Layout = "~/Views/Shared/_Layout.cshtml";
+var comments = (List<CommentListViewModel>)ViewBag.Comments;
+    void GetComments(List<CommentListViewModel> model){
+        @if(model.Count > 0)
+        {
+        @foreach (var c in model)
+        {
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">@c.AuthorName</h5>
+                @c.Description
+                <button class="btn btn-danger float-right" onclick="showCommentForm(@c.Id,@Model.Id)">Cevapla</button>
+                <div id="commentBox@(c.Id)">
 
-<div class="row">
+                </div>
+                <div class="ml-4">
+                    @{
 
+                    GetComments(c.SubComments);
 
-
-    <!-- Post Content Column -->
-    <div class="col-lg-12">
-
-        <!-- Title -->
-        <h1 class="mt-4">@Model.Title</h1>
-
-        <!-- Author -->
-
-
-        <hr>
-
-        <!-- Date/Time -->
-        <p>@Model.ReleaseDate</p>
-
-        <hr>
-
-        <!-- Preview Image -->
-        <getblogimage Enum="@BlogImageEnums.BlogDetail" id="@Model.Id"></getblogimage>
-
-        <hr>
-
-        <!-- Post Content -->
-
-        @Html.Raw(Model.Description)
-        <hr>
-
-        <!-- Comments Form -->
-        <div class="card my-4">
-            <h5 class="card-header">Leave a Comment:</h5>
-            <div class="card-body">
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                    }
+                </div>
             </div>
         </div>
+        }
+        }
+        }
+        }
+        <div class="row">
+            <!-- Post Content Column -->
+            <div class="col-lg-12">
+                <!-- Title -->
+                <h1 class="mt-4">@Model.Title</h1>
+                <!-- Author -->
+                <hr>
+                <!-- Date/Time -->
+                <p>@Model.ReleaseDate</p>
+                <hr>
+                <!-- Preview Image -->
+                <getblogimage Enum="@BlogImageEnums.BlogDetail" id="@Model.Id"></getblogimage>
+                <hr>
+                <!-- Post Content -->
+                @Html.Raw(Model.Description)
+                <hr>
+                <!--public string AuthorName { get; set; }
+                  public string AuthorEmail { get; set; }
+                  public DateTime ReleseDate { get; set; }
+                  public int? ParentCommentId { get; set; }
+                  public int BlogId { get; set; }-->
 
+                <!-- Comments Form -->
+                <div class="card my-4">
+                    <h5 class="card-header">Yorum Yaz: </h5>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label>Adınız :</label>
+                                <input type="text" name="AuthorName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-Posta Adresiniz :</label>
+                                <input type="email" name="AuthorEmail" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Yorumunuz :</label>
+                                <textarea required name="Description" class="form-control" rows="3"></textarea>
+                            </div>
+                            <input type="hidden" name="BlogId" value="@Model.Id">
+                            <input type="hidden" name="ParentCommentId">
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+                            </div>
 
-        @if(comments.Count > 0)
-        {
-            @foreach (var c in comments)
-            {
-                <!-- Comment with nested comments -->
-                <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                    <div class="media-body">
-                       
-                        <h5 class="mt-0">@c.AuthorName</h5>
-                        @c.Description
-                       
-                        <button class="btn btn-danger">Cevapla</button>
-                        @if (c.SubComments.Count > 0)
-                        {
-                            foreach (var sc in c.SubComments)
-                            {
-                                <div class="media mt-4 ml-4">
-                                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">@sc.AuthorName</h5>
-                                        
-                                        @sc.Description
-                                      
-                                    </div>
-                                    <button class="btn btn-danger mr-0">Cevapla</button>
-                                </div>
-                            }
-                        }
-
+                        </form>
                     </div>
                 </div>
-            }
-        }
+                @{
+                GetComments(comments);
+                }
+                @section JavaScript{
+                <script>
+                    function showCommentForm(id, blogId) {
+                        let html =
+                            ` <div class="card my-4"> <h5 class="card-header">Yorum Yaz: </h5> <div class="card-body"> <form method="post"> <div class="form-group"> <label>Adınız :</label> <input type="text" name="AuthorName" class="form-control" required> </div><div class="form-group"> <label>E-Posta Adresiniz :</label> <input type="email" name="AuthorEmail" class="form-control" required> </div><div class="form-group"> <label>Yorumunuz :</label> <textarea required name="Description" class="form-control" rows="3"></textarea> </div><input type="hidden" name="BlogId" value="${blogId}}"> <input type="hidden" name="ParentCommentId" value="${id}"><div class="form-group mt-4"> <button type="button" class="btn btn-warning" onClick="hideCommentForm(${id})">Vazgeç</button> <div class="form-group mt-4"> <button type="submit" class="btn btn-primary">Yorumu Gönder</button> </div></form> </div></div>`;
+                        $("#commentBox" + id).html(html);
+                    };
 
+                    function hideCommentForm(id) {
+                        $("#commentBox" + id).html("");
+                    }
+                </script>
+                }
+            </div>
 
-    </div>
-
-</div>
+        </div>
