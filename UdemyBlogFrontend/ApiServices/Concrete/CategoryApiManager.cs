@@ -64,6 +64,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             {
                 return JsonConvert.DeserializeObject<List<CategoryList>>(await responseMessage.Content.ReadAsStringAsync()); 
             }
+            return null;
         }
 
         public async Task<List<CategoryListViewModel>> GetCategoriesWithBlogCount()
