@@ -57,6 +57,15 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             return null;
         }
 
+        public async Task<List<CategoryList>> GetCategoriesByBlogIdAsync(int BlogId)
+        {
+            var responseMessage = await _httpClient.GetAsync($"http://localhost:64281/api/categories/GetCategoriesByBlogId/{BlogId}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<CategoryList>>(await responseMessage.Content.ReadAsStringAsync()); 
+            }
+        }
+
         public async Task<List<CategoryListViewModel>> GetCategoriesWithBlogCount()
         {
             var responseMessage = await _httpClient.GetAsync("http://localhost:64281/api/categories/CategoriesCountBlogs");

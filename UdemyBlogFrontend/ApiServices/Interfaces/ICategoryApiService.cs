@@ -9,7 +9,7 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
     public interface ICategoryApiService
     {
         Task<List<CategoryListViewModel>> GetAllAsync();
-       
+
         Task<List<CategoryListViewModel>> GetCategoriesWithBlogCount();
 
         Task<Category> GetCategoryNameByIdAsync(int id);
@@ -23,5 +23,7 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
         Task CreateCategoryAsync(CategoryList category);
 
         Task DeleteCategoryAsync(int id);
+
+        Task <List<CategoryList>> GetCategoriesByBlogIdAsync(int BlogId);
     }
 }
