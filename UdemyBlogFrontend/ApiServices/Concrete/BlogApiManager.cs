@@ -86,7 +86,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             formData.Add(new StringContent(model.AuthorName), nameof(CommentAddViewModel.AuthorName));
             formData.Add(new StringContent(model.Description), nameof(CommentAddViewModel.Description));
 
-            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddComment", formData);
+            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddComment",formData);
         }
 
         public async Task DeleteBlogAsync(int id)

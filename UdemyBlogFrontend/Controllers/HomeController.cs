@@ -45,7 +45,7 @@ namespace UdemyBlogFrontend.Controllers
             if (ModelState.IsValid){
                 model.ReleseDate=DateTime.Now;
                 await _blogApiService.AddCommentAsync(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("BlogDetail",new{id=model.BlogId});
             }
             return View(model);
         }
