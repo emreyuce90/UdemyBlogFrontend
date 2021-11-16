@@ -78,6 +78,17 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
 
         }
 
+        public async Task AddCategoryToBlogsAsync(AddCategory model)
+        {
+            //post işlemi gerçekleştireceğiz
+            //ilk olarak modelimizi json a çevirelim
+            var json = JsonConvert.SerializeObject(model);
+            //string content oluşturup jsonu içine atalım
+            var stringContent = new StringContent(json, Encoding.UTF8, mediaType: "application/json");
+            //post işlemini gerçekleştirelim
+            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddCategoryToBlog", stringContent);
+        }
+
         public async Task AddCommentAsync(CommentAddViewModel model)
         {
             MultipartFormDataContent formData = new MultipartFormDataContent();
@@ -86,7 +97,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             formData.Add(new StringContent(model.AuthorName), nameof(CommentAddViewModel.AuthorName));
             formData.Add(new StringContent(model.Description), nameof(CommentAddViewModel.Description));
 
-            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddComment",formData);
+            await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddComment", formData);
         }
 
         public async Task DeleteBlogAsync(int id)
@@ -94,6 +105,11 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("token"));
             await _httpClient.DeleteAsync("http://localhost:64281/api/blogs/" + id);
 
+        }
+
+        public async Task DeleteCategoryFromBlog(AddCategory model)
+        {
+            await _httpClient.DeleteAsync($"http://localhost:64281/api/blogs/RemoveCategoryFromBlog/?{nameof(model.CategoryId)}}={model.CategoryId}&{nameof(model.BlogId)}={model.BlogId}");
         }
 
         public async Task<List<BlogList>> GetAllAsync()
@@ -142,12 +158,42 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             return null;
         }
 
+        public async Task<List<BlogList>> GetBlogsBySearch(string searchString)
+        {
+            var responseMessage = await _httpClient.GetAsync("http://localhost:64281/api/blogs/SearchBlog/?s=" + searchString);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<BlogList>>(await responseMessage.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
+
+        public async Task<List<CategoryList>> GetCategoriesByBlogIdAsync(int id)
+        {
+            var responseMessage = await _httpClient.GetAsync("http://localhost:64281/api/categories/GetCategoriesByBlogId/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<CategoryList>>(await responseMessage.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
+
         public async Task<List<CommentListViewModel>> GetCommentsAsync(int BlogId, int? parentId)
         {
             var responseMessage = await _httpClient.GetAsync($"http://localhost:64281/api/blogs/{BlogId}/GetComments/?parentId={parentId}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<List<CommentListViewModel>>(await responseMessage.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
+
+        public async Task<List<BlogList>> GetLastFiveBlogsAsync()
+        {
+            var responseMessage = await _httpClient.GetAsync("http://localhost:64281/api/blogs/GetLastFiveBlogs");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<BlogList>>(await responseMessage.Content.ReadAsStringAsync());
             }
             return null;
         }

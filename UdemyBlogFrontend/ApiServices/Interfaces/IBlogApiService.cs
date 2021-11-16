@@ -23,6 +23,14 @@ namespace UdemyBlogFrontend.ApiServices.Interfaces
 
         Task AddCommentAsync(CommentAddViewModel model);
 
+        Task<List<CategoryList>> GetCategoriesByBlogIdAsync(int id);
+
+        Task <List<BlogList>> GetLastFiveBlogsAsync();
+
+        Task<List<BlogList>> GetBlogsBySearch(string searchString);
+
+        Task AddCategoryToBlogsAsync(AddCategory model);
+        Task DeleteCategoryFromBlog(AddCategory model);
         
     }
 }
