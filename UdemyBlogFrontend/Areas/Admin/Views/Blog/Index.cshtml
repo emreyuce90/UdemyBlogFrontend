@@ -6,7 +6,7 @@
         <tr>
             <td>Blog Adı</td>
             <td>Blog Başlığı</td>
-            <td>Kategorisi</td>
+            <td>Kategori Ata</td>
             <td>İşlemler</td>
 
     </thead>
@@ -16,7 +16,9 @@
             <tr>
                 <td>@blog.Title</td>
                 <td>@blog.ShortDescription</td>
-                <td>BlogKategori</td>
+                <td>
+                    <a asp-action="AssignCategory" asp-route-id="@blog.Id">Kategori Ata</a>
+                </td>
                 <td>
                     <a asp-action="UpdateBlog" asp-route-id="@blog.Id" class="btn btn-dark">
                         Düzenle

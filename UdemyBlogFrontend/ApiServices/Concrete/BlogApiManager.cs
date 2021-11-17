@@ -27,6 +27,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
 
         }
 
+       
 
         //Backend tarafına formumuzu post edeceğiz
 
@@ -85,6 +86,8 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
             var json = JsonConvert.SerializeObject(model);
             //string content oluşturup jsonu içine atalım
             var stringContent = new StringContent(json, Encoding.UTF8, mediaType: "application/json");
+            //İlgili action authorize bir metot olduğu için burada tokenımızı gönderelim
+            _httpClient.DefaultRequestHeaders.Authorization=new AuthenticationHeaderValue("bearer",_httpContextAccessor.HttpContext.Session.GetString("token"));
             //post işlemini gerçekleştirelim
             await _httpClient.PostAsync("http://localhost:64281/api/blogs/AddCategoryToBlog", stringContent);
         }
@@ -109,7 +112,7 @@ namespace UdemyBlogFrontend.ApiServices.Concrete
 
         public async Task DeleteCategoryFromBlog(AddCategory model)
         {
-            await _httpClient.DeleteAsync($"http://localhost:64281/api/blogs/RemoveCategoryFromBlog/?{nameof(model.CategoryId)}}={model.CategoryId}&{nameof(model.BlogId)}={model.BlogId}");
+            await _httpClient.DeleteAsync($"http://localhost:64281/api/blogs/RemoveCategoryFromBlog/?{nameof(model.CategoryId)}={model.CategoryId}&{nameof(model.BlogId)}={model.BlogId}");
         }
 
         public async Task<List<BlogList>> GetAllAsync()
